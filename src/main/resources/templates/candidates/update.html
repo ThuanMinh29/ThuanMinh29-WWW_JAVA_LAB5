@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Update Candidate</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+            crossorigin="anonymous"></script>
+    <style>
+        body {
+            background-color: #f7fafc;
+            font-family: 'Arial', sans-serif;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin-top: 50px;
+        }
+
+        .form-container {
+            background-color: #ffffff;
+            border-radius: 12px;
+            padding: 40px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-title {
+            font-size: 2rem;
+            font-weight: 600;
+            color: #00796b;
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .form-control, .form-select {
+            border-radius: 8px;
+            padding: 12px;
+            border: 1px solid #00796b;
+        }
+
+        .form-control:focus, .form-select:focus {
+            border-color: #004d40;
+            box-shadow: 0 0 10px rgba(0, 77, 64, 0.2);
+        }
+
+        .btn-group a {
+            background-color: #00796b;
+            border-radius: 25px;
+            color: #fff;
+            font-size: 1rem;
+            padding: 10px 30px;
+            text-decoration: none;
+            transition: background-color 0.3s ease;
+            margin-right: 15px;
+        }
+
+        .btn-group a:hover {
+            background-color: #004d40;
+        }
+
+        .btn-primary {
+            background-color: #00796b;
+            border: none;
+            padding: 14px 30px;
+            font-size: 1.1rem;
+            border-radius: 8px;
+            width: 100%;
+        }
+
+        .btn-primary:hover {
+            background-color: #004d40;
+        }
+
+        .btn-secondary {
+            background-color: #004d40;
+            border: none;
+            padding: 14px 30px;
+            font-size: 1.1rem;
+            border-radius: 8px;
+            width: 100%;
+        }
+
+        .btn-secondary:hover {
+            background-color: #00251a;
+        }
+
+        .form-row {
+            margin-bottom: 15px;
+        }
+
+        .col-form-label {
+            font-weight: 500;
+        }
+
+        .col-sm-2, .col-sm-10, .col-sm-3 {
+            display: flex;
+            align-items: center;
+        }
+
+        .input-group {
+            margin-top: 10px;
+        }
+
+        .input-group input {
+            border-radius: 5px;
+            border: 1px solid #ddd;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="form-container">
+        <div class="btn-group mb-4">
+            <a href="/candidates" class="btn btn-secondary">Candidates</a>
+            <a href="/companies" class="btn btn-secondary">Company</a>
+            <a href="/jobs" class="btn btn-secondary">Job</a>
+        </div>
+        <h1 class="form-title">Update Candidate</h1>
+        <form th:action="@{/update}" th:object="${candidate}" method="post">
+            <div class="mb-4">
+                <label for="name" class="col-sm-2 col-form-label">Full Name</label>
+                <input type="text" class="form-control" id="name" th:field="*{fullName}" placeholder="Enter full name" required>
+            </div>
+
+            <div class="mb-4">
+                <label for="dob" class="col-sm-2 col-form-label">Date of Birth</label>
+                <input type="date" class="form-control" id="dob" th:field="*{dob}" required>
+            </div>
+
+            <div class="mb-4">
+                <label for="phone" class="col-sm-2 col-form-label">Phone</label>
+                <input type="tel" class="form-control" id="phone" th:field="*{phone}" placeholder="Enter phone number" required>
+            </div>
+
+            <div class="mb-4">
+                <label for="inputEmail" class="col-sm-2 col-form-label">Email</label>
+                <input type="email" class="form-control" id="inputEmail" th:field="*{email}" placeholder="Enter email" required>
+            </div>
+
+            <div class="mb-4">
+                <label class="col-sm-2 col-form-label">Address</label>
+                <div class="input-group">
+                    <input type="text" class="form-control" placeholder="Number" th:field="*{address.number}" required>
+                    <input type="text" class="form-control" placeholder="Street" th:field="*{address.street}" required>
+                    <input type="text" class="form-control" placeholder="City" th:field="*{address.city}" required>
+                    <input type="text" class="form-control" placeholder="Zip" th:field="*{address.zipcode}" required>
+                </div>
+                <div class="input-group mt-3">
+                    <select class="form-select" th:field="*{address.country}" required>
+                        <option value="" disabled selected>Select Country</option>
+                        <option th:each="country : ${countries}" th:value="${country}" th:text="${country.name}"></option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="d-grid gap-2 col-6 mx-auto">
+                <button class="btn btn-primary" type="submit">Update Candidate</button>
+            </div>
+            <br>
+            <div class="d-grid gap-2 col-6 mx-auto">
+                <a class="btn btn-secondary" href="/candidates">Back to List</a>
+            </div>
+        </form>
+    </div>
+</div>
+</body>
+</html>

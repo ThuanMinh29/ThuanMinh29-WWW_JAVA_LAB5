@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Candidates with Pagination</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+            crossorigin="anonymous"></script>
+    <style>
+        body {
+            background-color: #f0f4f8; /* Light background for a clean feel */
+            font-family: 'Roboto', sans-serif;
+            color: #333;
+        }
+
+        .container {
+            margin-top: 60px;
+            max-width: 900px;
+            text-align: center; /* Center the content */
+        }
+
+        h1 {
+            font-size: 2.4rem;
+            color: #1a237e; /* Keep header color bold */
+            font-weight: bold;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .table-container {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        .table {
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin: 0 auto; /* Center the table */
+            width: 100%;
+            max-width: 900px;
+        }
+
+        .table thead {
+            background-color: #3949ab; /* Darker blue header */
+            color: #fff;
+            font-size: 1rem;
+        }
+
+        .table tbody tr:hover {
+            background-color: #f1f8ff; /* Subtle hover effect */
+        }
+
+        .btn {
+            font-size: 0.875rem;
+            border-radius: 20px;
+            padding: 8px 20px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary {
+            background-color: #3949ab;
+            border-color: #3949ab;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: #303f9f;
+            border-color: #303f9f;
+        }
+
+        .btn-secondary {
+            background-color: #5c6bc0;
+            border-color: #5c6bc0;
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background-color: #3f51b5;
+        }
+
+        .btn-warning {
+            background-color: #ff9800;
+            color: white;
+        }
+
+        .btn-warning:hover {
+            background-color: #fb8c00;
+        }
+
+        .btn-danger {
+            background-color:  #FF0000;
+            color: white;
+        }
+
+        .btn-danger:hover {
+            background-color: #d32f2f;
+        }
+
+        .pagination {
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .inline {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .inline a {
+            text-decoration: none;
+            color: #3949ab;
+            font-weight: 600;
+            padding: 6px 12px;
+            border-radius: 5px;
+            transition: background-color 0.2s ease;
+        }
+
+        .inline a.active {
+            background-color: #3949ab;
+            color: white;
+        }
+
+        .inline a:hover {
+            background-color: #e8eaf6;
+        }
+
+        .btn-add {
+            background-color: #43a047;
+            color: #ffffff;
+            border-radius: 25px;
+            padding: 12px 25px;
+            font-size: 1rem;
+            font-weight: 600;
+            width: 100%;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn-add:hover {
+            background-color: #388e3c;
+        }
+
+        /* Container for buttons */
+        .d-flex {
+            display: flex;
+            justify-content: center; /* Centers buttons horizontally */
+            gap: 15px; /* Adds space between buttons */
+        }
+
+        /* Base button style */
+        .btn {
+            font-size: 1rem;
+            font-weight: 600;
+            padding: 12px 30px;
+            border-radius: 25px;
+            text-decoration: none;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+        /* Unique styles for each button */
+        .btn-candidates {
+            background-color: #5c6bc0;
+            color: white;
+        }
+
+        .btn-candidates:hover {
+            background-color: #3949ab;
+            transform: translateY(-4px); /* Adds a subtle hover effect */
+        }
+
+        .btn-companies {
+            background-color: #ffa726;
+            color: white;
+        }
+
+        .btn-companies:hover {
+            background-color: #fb8c00;
+            transform: translateY(-4px); /* Adds a subtle hover effect */
+        }
+
+        .btn-jobs {
+            background-color: #43a047;
+            color: white;
+        }
+
+        .btn-jobs:hover {
+            background-color: #388e3c;
+            transform: translateY(-4px); /* Adds a subtle hover effect */
+        }
+
+        /* Optional: Add margin between buttons */
+        .mx-3 {
+            margin-left: 12px;
+            margin-right: 12px;
+        }
+
+
+
+    </style>
+</head>
+<body>
+<div class="container">
+    <!-- Navigation buttons -->
+    <div class="container">
+        <!-- Navigation buttons -->
+        <div class="d-flex justify-content-center mb-4">
+            <a href="/candidates" class="btn btn-candidates mx-3">Candidates</a>
+            <a href="/companies" class="btn btn-companies mx-3">Company</a>
+            <a href="/jobs" class="btn btn-jobs mx-3">Job</a>
+        </div>
+    </div>
+
+
+    <h1>List of Candidates</h1>
+
+    <!-- Back Button -->
+    <a class="btn btn-primary mb-4" href="/">Back to Home</a>
+
+    <!-- Candidates Table -->
+    <div class="table-container">
+        <table class="table table-striped table-hover">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Full Name</th>
+                <th>DOB</th>
+                <th>Address</th>
+                <th>Phone</th>
+                <th>Email</th>
+                <th>Skills</th>
+                <th>Suggested skills to learn</th>
+                <th>Edit</th>
+                <th>Delete</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="candidate, iStat : ${candidatePage.content}">
+                <td th:text="${candidate.id}"></td>
+                <td th:text="${candidate.fullName}"></td>
+                <td th:text="${candidate.dob}"></td>
+                <td th:text="${candidate.address}"></td>
+                <td th:text="${candidate.phone}"></td>
+                <td th:text="${candidate.email}"></td>
+                <td>
+                    <ul th:each="candidateSkill : ${candidate.candidateSkills}">
+                        <li> <span th:text="${candidateSkill.skill.skillName}"></span> </li>
+                        <li> <span th:text="${candidateSkill.skillLevel}"></span></li>
+                    </ul>
+                </td>
+                <td>
+                    <a class="btn btn-info btn-sm"
+                       th:href="@{/candidates/suggest-skill-to-learn/{id}(id=${candidate.id})}">Suggest</a>
+                </td>
+                <td><a class="btn btn-warning btn-sm"
+                       th:href="@{candidates/show-edit-form/{id}(id=${candidate.id})}">Edit</a></td>
+                <td><a class="btn btn-danger btn-sm" th:href="@{/delete/{id}(id=${candidate.id})}">Delete</a></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+
+
+    <div class="inline" th:if="${candidatePage.totalPages > 1}">
+        <!-- Link to the first page -->
+        <a th:if="${candidatePage.number > 2}"
+           th:href="@{/candidates(size=${candidatePage.size}, page=1)}"
+           class="page-link"
+           th:text="'<<'"></a>
+
+        <!-- Ellipsis if there are pages before the first range -->
+        <span th:if="${candidatePage.number > 5}" class="page-ellipsis">...</span>
+
+        <!-- Display 2 previous pages, current page, and 2 next pages -->
+        <a th:each="pageNumber : ${#numbers.sequence(candidatePage.number - 4, candidatePage.number + 4)}"
+           th:if="${pageNumber >= 1 && pageNumber <= candidatePage.totalPages}"
+           th:class="${pageNumber == candidatePage.number + 1} ? 'page-link active'"
+           th:href="@{/candidates(size=${candidatePage.size}, page=${pageNumber})}"
+           class="page-link"
+           th:text="${pageNumber}"></a>
+
+        <!-- Ellipsis if there are pages after the last range -->
+        <span th:if="${candidatePage.number + 2 < candidatePage.totalPages - 1}" class="page-ellipsis">...</span>
+
+        <!-- Link to the last page -->
+        <a th:if="${candidatePage.number < candidatePage.totalPages - 1}"
+           th:href="@{/candidates(size=${candidatePage.size}, page=${candidatePage.totalPages })}"
+           class="page-link"
+           th:text="Last"></a>
+    </div>
+
+
+
+
+    <!-- Add Candidate Button -->
+    <div class="mt-4 text-center">
+        <a href="/candidates/show-add-form" class="btn btn-add">Add a New Candidate</a>
+    </div>
+</div>
+</body>
+</html>
